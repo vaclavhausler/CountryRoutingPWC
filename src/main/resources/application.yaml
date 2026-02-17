@@ -1,3 +1,9 @@
 spring:
   application:
     name: CountryRoutingPWC
+  profiles:
+    include: variables
+
+server:
+  port: 8080
+  address: 0.0.0.0 # Windows + Docker Desktop

@@ -1,7 +1,7 @@
 plugins {
-    id 'java'
-    id 'org.springframework.boot' version '4.0.2'
-    id 'io.spring.dependency-management' version '1.1.7'
+    id("java")
+    alias(libs.plugins.spring.boot)
+    alias(libs.plugins.spring.dependency.management)
 }
 
 group = 'com.vhausler'
@@ -9,19 +9,45 @@ version = '0.0.1-SNAPSHOT'
 description = 'CountryRoutingPWC'
 
 java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
     toolchain {
         languageVersion = JavaLanguageVersion.of(17)
     }
+}
+
+dependencies {
+    implementation libs.spring.boot.starter
+    implementation libs.spring.boot.starter.web
+    implementation libs.swagger.annotations
+    implementation libs.springdoc.openapi.starter.webmvc.ui
+
+    testImplementation libs.spring.boot.starter.test
+
+    // JUnit
+    testImplementation platform(libs.junit.bom)
+    testImplementation libs.junit.jupiter
+    testRuntimeOnly libs.junit.platform.launcher
+
+    // Lombok
+    compileOnly libs.lombok
+    annotationProcessor libs.lombok
+    testCompileOnly libs.lombok
+    testAnnotationProcessor libs.lombok
+
+    // SLF4J
+    implementation libs.slf4j.api
 }
 
 repositories {
     mavenCentral()
 }
 
-dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+test {
+    useJUnitPlatform()
+    // The following removes warning lines related to:
+    // Mockito is currently self-attaching to enable the inline-mock-maker. This will no longer work in future releases of the JDK.
+    jvmArgs "-javaagent:${configurations.testRuntimeClasspath.find { it.name.contains('mockito-core') }}", '-Xshare:off'
 }
 
 tasks.named('test') {

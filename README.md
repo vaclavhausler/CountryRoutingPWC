@@ -1,8 +1,8 @@
-# Land Routing Service
+# Country Routing Service
 
 ## Overview
 
-The **Land Routing Service** is a Spring Boot application that calculates the shortest land route between two countries based on their border information.
+The **Country Routing Service** is a Spring Boot application that calculates the shortest land route between two countries based on their border information.
 It uses the [countries.json dataset](https://raw.githubusercontent.com/mledoze/countries/master/countries.json) and exposes a REST API endpoint for route lookup.
 
 The service handles:
@@ -16,12 +16,12 @@ The service handles:
 
 ## Features
 
-- Spring Boot + Gradle + Java 24
+- Spring Boot + Gradle + Java 17
 - REST endpoint: `/routing/{origin}/{destination}`
 - Returns the shortest land route if available
 - HTTP 400 if no land route exists
 - CCA3 country code identification
-- Swagger UI at `/swagger-ui.html`
+- Swagger UI at `/swagger-ui/index.html`
 - Fallback to local JSON copy if the remote source is unavailable
 - Unit & integration tests included
 
@@ -31,7 +31,7 @@ The service handles:
 
 ### Prerequisites
 
-- Java 24
+- Java 17
 - Gradle 8+
 - (Optional) Docker if you want to run in a container
 
@@ -221,4 +221,4 @@ Imagine you want a route from CZE to ITA.
 - AI picked the correct algorithm, mostly did a good job at covering the whole use-case.
 - I've prompted for Swagger, cleaner DTO, json fallback and testing.
 - Originally I had this set up for Java 24 as I use that on my private projects. 
-However, I decided to switch to Java 17 for this one 'cause docker kept complaining and I didn't want to spend more time on it.
+However, I decided to switch to Java 17 for this one 'cause docker kept complaining and I wanted to ship this ASAP.
